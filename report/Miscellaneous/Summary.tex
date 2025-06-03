@@ -1,0 +1,21 @@
+\chapter*{Executive Summary}
+\addcontentsline{toc}{chapter}{Executive Summary}
+
+Because equity returns are skewed and heavy-tailed, Harry Markowitz's Gaussian mean-variance optimization systematically understates downside risks. Despite extensive empirical evidence of these return characteristics, the mean-variance framework remains popular due to its analytical clarity and closed-form tractability. Existing approaches to incorporate skewness, such as behavioral utility frameworks or Mean-Variance-Skewness-Kurtosis (MVSK) models, either rely on subjective parameters, non-rational investor biases, or sacrifice the elegance and computational efficiency inherent in Markowitz's original model.
+
+This thesis addresses a key research question: \textit{Can skewness be embedded into portfolio optimization without introducing subjective parameters, sacrificing convexity, or relying on restrictive functional forms?} We benchmark Gaussian Mixture Models (GMM), a recent parametric method, and propose Kernel Density Estimation (KDE) as a fully non-parametric enhancement. Both approaches replace the single-Gaussian assumption by approximating returns as weighted sums of Gaussian components.
+
+Methodologically, substituting these densities into exponential utility maximization yields a log-sum-exponent (LSE) objective. This LSE formulation adaptively amplifies the weighting of downside scenarios proportional to the traditional risk-aversion parameter $\gamma$. Critically, this preserves convexity, ensuring computational efficiency and global optimality while embedding skewness directly into the portfolio optimization process.
+
+Empirically, the density-based strategies were tested across four major equity indices (S\&P500, FTSE100, EURO STOXX50, Hang Seng) over the period 2015-2025. We evaluated a large configuration space of 828 stable configurations varying in frequency, lookback windows, rebalancing intervals, and universe sizes. Key findings include:
+
+\begin{itemize}
+    \item Three distinct investment regimes emerged based on the risk aversion parameter $\gamma$: (1) Return-seeking regime ($\gamma<\bar{\gamma}$) closely resembling standard Markowitz solutions; (2) Variance-floor regime ($\gamma=\bar{\gamma}$) characterized by a modified minimum-variance portfolio; and (3) Skew-seeking regime ($\gamma>\bar{\gamma}$), willingly accepting higher volatility to pursue positive skewness.
+    \newpage
+    \item KDE portfolios consistently demonstrate superior stability and competitive risk-adjusted returns compared to GMM portfolios. Particularly in turbulent markets and short-window configurations ($\leq$12 months), KDE outperformed classical Markowitz portfolios in 59\% of cases on a risk-adjusted basis, delivering an average penalized Sharpe ratio improvement of 12\%, while outperforming MAR across the board on downside risk measures.
+    \item GMM showed attractive in-sample results but suffered from substantial performance dispersion out-of-sample and won fewer than 15\% of cases. GMM's computational intensity, driven by the Expectation-Maximization procedure, outweighed its practical benefits.
+\end{itemize}
+
+This thesis contributes to the literature by demonstrating that integrating skewness through density estimation maintains both rational decision-making foundations and analytical clarity. The proposed KDE-based method requires minimal tuning, solely involving the familiar risk-aversion parameter, and significantly enhances downside risk management.
+
+Practically, KDE provides an intuitive, theoretically grounded bridge between classical mean-variance optimization and the empirical reality of skewed financial returns. Future research directions include incorporating transaction costs, testing null-bandwidth KDE across all configurations, extending adaptive LSE weighting to risk-parity portfolios, and evaluating the method's robustness in high-frequency contexts.

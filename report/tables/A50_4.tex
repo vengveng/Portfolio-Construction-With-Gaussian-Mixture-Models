@@ -1,0 +1,51 @@
+\
+\paragraph{CART: $\Delta$DD(TAN(KDE) - MV)}
+
+\begin{flushleft}
+\ttfamily %
+N ≤ 25.00 \\
+\quad data\_freq (daily to weekly) \\
+\quad \quad N ≤ 15.00 \\
+\quad \quad \quad index ≠ STOXX50 \\
+\quad \quad \quad \quad → weights: [88\% ≤ 0, 12\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad index ≠ STOXX50 \\
+\quad \quad \quad \quad → weights: [98\% ≤ 0, 2\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad index = STOXX50 \\
+\quad \quad \quad \quad → weights: [77\% ≤ 0, 23\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad N > 15.00 \\
+\quad \quad \quad index ≠ S\&P500 \\
+\quad \quad \quad \quad → weights: [72\% ≤ 0, 28\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad index ≠ S\&P500 \\
+\quad \quad \quad \quad → weights: [84\% ≤ 0, 16\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad index = S\&P500 \\
+\quad \quad \quad \quad → weights: [61\% ≤ 0, 39\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad data\_freq (monthly) \\
+\quad \quad index ≠ HSI \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad → weights: [22\% ≤ 0, 78\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad window (36 to 120) \\
+\quad \quad \quad \quad → weights: [51\% ≤ 0, 49\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad index = HSI \\
+\quad \quad \quad \quad → weights: [79\% ≤ 0, 21\% > 0] ⇒ predict Δ ≤ 0 \\
+N > 25.00 \\
+\quad data\_freq (daily to weekly) \\
+\quad \quad N ≤ 75.00 \\
+\quad \quad \quad data\_freq (daily) \\
+\quad \quad \quad \quad → weights: [63\% ≤ 0, 37\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad data\_freq (daily) \\
+\quad \quad \quad \quad → weights: [74\% ≤ 0, 26\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad data\_freq (weekly to monthly) \\
+\quad \quad \quad \quad → weights: [52\% ≤ 0, 48\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad N > 75.00 \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad → weights: [56\% ≤ 0, 44\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (36 to 120) \\
+\quad \quad \quad \quad → weights: [2\% ≤ 0, 98\% > 0] ⇒ predict Δ > 0 \\
+\quad data\_freq (monthly) \\
+\quad \quad N ≤ 40.00 \\
+\quad \quad \quad \quad → weights: [13\% ≤ 0, 87\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad N ≤ 40.00 \\
+\quad \quad \quad \quad → weights: [18\% ≤ 0, 82\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad N > 40.00 \\
+\quad \quad \quad \quad → weights: [8\% ≤ 0, 92\% > 0] ⇒ predict Δ > 0 \\
+\end{flushleft}

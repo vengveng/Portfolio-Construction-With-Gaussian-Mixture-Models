@@ -1,0 +1,32 @@
+\
+\paragraph{CART: $\Delta$SR$_p$(KDE - VW)}
+
+\begin{flushleft}
+\ttfamily % Use typewriter font for the tree
+index $\neq$ HSI \\
+\quad window (1 to 36) \\
+\quad \quad window (1) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [100\% $\leq$ 0, 0\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad window (3 to 120) \\
+\quad \quad \quad index $\neq$ STOXX50 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [70\% $\leq$ 0, 30\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad \quad index = STOXX50 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [49\% $\leq$ 0, 51\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad window (60 to 120) \\
+\quad \quad N $\leq$ 40.00 \\
+\quad \quad \quad N $\leq$ 7.50 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [94\% $\leq$ 0, 6\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad N > 40.00 \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [71\% $\leq$ 0, 29\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+index = HSI \\
+\quad window (1 to 60) \\
+\quad \quad data\_freq (daily) \\
+\quad \quad \quad window (1 to 6) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [5\% $\leq$ 0, 95\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad data\_freq (weekly to monthly) \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [27\% $\leq$ 0, 73\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad window (120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [100\% $\leq$ 0, 0\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\end{flushleft}

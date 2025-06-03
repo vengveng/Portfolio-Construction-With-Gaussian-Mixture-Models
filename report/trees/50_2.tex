@@ -1,0 +1,33 @@
+\
+\paragraph{CART: $\Delta$SR$_p$(TAN(KDE) - VW)}
+
+\begin{flushleft}
+\ttfamily % Use typewriter font for the tree
+index $\neq$ FTSE100 \\
+\quad index $\neq$ S\&P500 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad N $\leq$ 15.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [100\% $\leq$ 0, 0\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad \quad N > 15.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [42\% $\leq$ 0, 58\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad window (6 to 120) \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [20\% $\leq$ 0, 80\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad \quad window (120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [69\% $\leq$ 0, 31\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad index = S\&P500 \\
+\quad \quad data\_freq (daily to weekly) \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [87\% $\leq$ 0, 13\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad data\_freq (monthly) \\
+\quad \quad \quad N $\leq$ 25.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [33\% $\leq$ 0, 67\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad \quad N > 25.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [76\% $\leq$ 0, 24\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+index = FTSE100 \\
+\quad N $\leq$ 65.00 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [95\% $\leq$ 0, 5\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad N > 65.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [44\% $\leq$ 0, 56\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\end{flushleft}

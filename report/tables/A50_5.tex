@@ -1,0 +1,49 @@
+\
+\paragraph{CART: $\Delta$SR$_p$(TAN(KDE) - TAN)}
+
+\begin{flushleft}
+\ttfamily %
+index ≠ HSI \\
+\quad N ≤ 40.00 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad window (1) \\
+\quad \quad \quad \quad → weights: [64\% ≤ 0, 36\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (3 to 120) \\
+\quad \quad \quad \quad → weights: [46\% ≤ 0, 54\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad window (6 to 120) \\
+\quad \quad \quad index = FTSE100 \\
+\quad \quad \quad \quad → weights: [17\% ≤ 0, 83\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad index ≠ FTSE100 \\
+\quad \quad \quad \quad → weights: [4\% ≤ 0, 96\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad index = FTSE100 \\
+\quad \quad \quad \quad → weights: [30\% ≤ 0, 70\% > 0] ⇒ predict Δ > 0 \\
+\quad N > 40.00 \\
+\quad \quad window (1 to 6) \\
+\quad \quad \quad \quad → weights: [72\% ≤ 0, 28\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad window (12 to 120) \\
+\quad \quad \quad N ≤ 275.00 \\
+\quad \quad \quad \quad → weights: [46\% ≤ 0, 54\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad N > 275.00 \\
+\quad \quad \quad \quad → weights: [67\% ≤ 0, 33\% > 0] ⇒ predict Δ ≤ 0 \\
+index = HSI \\
+\quad window (1 to 36) \\
+\quad \quad window (1 to 6) \\
+\quad \quad \quad N ≤ 15.00 \\
+\quad \quad \quad \quad → weights: [83\% ≤ 0, 17\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad N ≤ 15.00 \\
+\quad \quad \quad \quad → weights: [87\% ≤ 0, 13\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad N > 15.00 \\
+\quad \quad \quad \quad → weights: [78\% ≤ 0, 22\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad window (12 to 120) \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad → weights: [73\% ≤ 0, 27\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad → weights: [63\% ≤ 0, 37\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (36 to 120) \\
+\quad \quad \quad \quad → weights: [82\% ≤ 0, 18\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad window (60 to 120) \\
+\quad \quad window (1 to 60) \\
+\quad \quad \quad \quad → weights: [59\% ≤ 0, 41\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad window (120) \\
+\quad \quad \quad \quad → weights: [42\% ≤ 0, 58\% > 0] ⇒ predict Δ > 0 \\
+\end{flushleft}

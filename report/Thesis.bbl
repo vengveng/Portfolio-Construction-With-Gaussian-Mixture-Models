@@ -1,0 +1,124 @@
+\begin{thebibliography}{17}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ker(2015)]{KernelDensityEstimators2015}
+Kernel {{Density Estimators}}.
+\newblock In \emph{Multivariate {{Density Estimation}}}, pages 137--216. John Wiley \& Sons, Ltd, 2015.
+\newblock ISBN 978-1-118-57557-4.
+\newblock \doi{10.1002/9781118575574.ch6}.
+\newblock URL \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118575574.ch6}.
+
+\bibitem[Oth(2015)]{OtherApplications2015}
+Other {{Applications}}.
+\newblock In \emph{Multivariate {{Density Estimation}}}, pages 267--295. John Wiley \& Sons, Ltd, 2015.
+\newblock ISBN 978-1-118-57557-4.
+\newblock \doi{10.1002/9781118575574.ch9}.
+\newblock URL \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/9781118575574.ch9}.
+
+\bibitem[Benuzzi and Ploner(2024)]{benuzziSkewnessseekingBehaviorFinancial2024}
+Matteo Benuzzi and Matteo Ploner.
+\newblock Skewness-seeking behavior and financial investments.
+\newblock 20\penalty0 (1):\penalty0 129--165, 2024.
+\newblock ISSN 1614-2454.
+\newblock \doi{10.1007/s10436-023-00437-y}.
+\newblock URL \url{https://doi.org/10.1007/s10436-023-00437-y}.
+
+\bibitem[Boyd and Vandenberghe(2004)]{boydConvexOptimization2004}
+Stephen~P. Boyd and Lieven Vandenberghe.
+\newblock \emph{Convex Optimization}.
+\newblock Cambridge University Press, 2004.
+\newblock ISBN 978-0-521-83378-3.
+
+\bibitem[Cui et~al.(2024)Cui, Jiang, Shi, Xiao, and Yan]{cuiDecisionMakingCumulative2024}
+Xiangyu Cui, Rujun Jiang, Yun Shi, Rufeng Xiao, and Yifan Yan.
+\newblock Decision {{Making}} under {{Cumulative Prospect Theory}}: {{An Alternating Direction Method}} of {{Multipliers}}, 2024.
+\newblock URL \url{http://arxiv.org/abs/2210.02626}.
+
+\bibitem[Ebert and Hilpert(2016)]{ebertSkewnessPreferencePopularity2016}
+Sebastian Ebert and Christian Hilpert.
+\newblock Skewness {{Preference}} and the {{Popularity}} of {{Technical Analysis}}, 2016.
+\newblock URL \url{https://papers.ssrn.com/abstract=2354962}.
+
+\bibitem[Horn and Johnson(2017)]{hornMatrixAnalysis2017}
+Roger~A. Horn and Charles~R. Johnson.
+\newblock \emph{Matrix {{Analysis}}}.
+\newblock Cambridge University Press, second edition, corrected reprint edition, 2017.
+\newblock ISBN 978-0-521-83940-2 978-0-521-54823-6.
+
+\bibitem[Kliger and Levy(2009)]{kligerTheoriesChoiceRisk2009}
+Doron Kliger and Ori Levy.
+\newblock Theories of choice under risk: {{Insights}} from financial markets.
+\newblock 71\penalty0 (2):\penalty0 330--346, 2009.
+\newblock ISSN 0167-2681.
+\newblock \doi{10.1016/j.jebo.2009.01.012}.
+\newblock URL \url{https://www.sciencedirect.com/science/article/pii/S0167268109000328}.
+
+\bibitem[Konno and Suzuki(1995)]{konnoMeanVarianceSkewnessPortfolioOptimization1995}
+Hiroshi Konno and Ken-ichi Suzuki.
+\newblock A {{Mean-Variance-Skewness Portfolio Optimization Model}}.
+\newblock 38\penalty0 (2):\penalty0 173--187, 1995.
+\newblock \doi{10.15807/jorsj.38.173}.
+
+\bibitem[Luxenberg and Boyd(2022)]{luxenbergPortfolioConstructionGaussian2022}
+Eric Luxenberg and Stephen Boyd.
+\newblock Portfolio {{Construction}} with {{Gaussian Mixture Returns}} and {{Exponential Utility}} via {{Convex Optimization}}, 2022.
+\newblock URL \url{http://arxiv.org/abs/2205.04563}.
+
+\bibitem[Luxenberg et~al.(2024)Luxenberg, Schiele, and Boyd]{luxenbergPortfolioOptimizationCumulative2024}
+Eric Luxenberg, Philipp Schiele, and Stephen Boyd.
+\newblock Portfolio {{Optimization}} with {{Cumulative Prospect Theory Utility}} via {{Convex Optimization}}.
+\newblock 64\penalty0 (5):\penalty0 3027--3047, 2024.
+\newblock ISSN 0927-7099, 1572-9974.
+\newblock \doi{10.1007/s10614-024-10556-x}.
+\newblock URL \url{https://link.springer.com/10.1007/s10614-024-10556-x}.
+
+\bibitem[Mandal and Thakur(2024)]{mandalHigherorderMomentsPortfolio2024}
+Pawan~Kumar Mandal and Manoj Thakur.
+\newblock Higher-order moments in portfolio selection problems: {{A}} comprehensive literature review.
+\newblock 238:\penalty0 121625, 2024.
+\newblock ISSN 0957-4174.
+\newblock \doi{10.1016/j.eswa.2023.121625}.
+\newblock URL \url{https://www.sciencedirect.com/science/article/pii/S0957417423021279}.
+
+\bibitem[Mao(1970)]{maoSurveyCapitalBudgeting1970}
+James C.~T. Mao.
+\newblock Survey of {{Capital Budgeting}}: {{Theory}} and {{Practice}}.
+\newblock 25\penalty0 (2):\penalty0 349--360, 1970.
+\newblock ISSN 0022-1082.
+\newblock \doi{10.2307/2325481}.
+\newblock URL \url{https://www.jstor.org/stable/2325481}.
+
+\bibitem[Quiggin(1982)]{quigginTheoryAnticipatedUtility1982}
+John Quiggin.
+\newblock A theory of anticipated utility.
+\newblock 3\penalty0 (4):\penalty0 323--343, 1982.
+\newblock ISSN 0167-2681.
+\newblock URL \url{https://EconPapers.repec.org/RePEc:eee:jeborg:v:3:y:1982:i:4:p:323-343}.
+
+\bibitem[Redner and Walker(1984)]{rednerMixtureDensitiesMaximum1984}
+Richard~A. Redner and Homer~F. Walker.
+\newblock Mixture {{Densities}}, {{Maximum Likelihood}} and the {{EM Algorithm}}.
+\newblock 26\penalty0 (2):\penalty0 195--239, 1984.
+\newblock ISSN 0036-1445, 1095-7200.
+\newblock \doi{10.1137/1026034}.
+\newblock URL \url{http://epubs.siam.org/doi/10.1137/1026034}.
+
+\bibitem[Tversky and Kahneman(1992)]{tverskyAdvancesProspectTheory1992}
+Amos Tversky and Daniel Kahneman.
+\newblock Advances in prospect theory: {{Cumulative}} representation of uncertainty.
+\newblock 5\penalty0 (4):\penalty0 297--323, 1992.
+\newblock ISSN 1573-0476.
+\newblock \doi{10.1007/BF00122574}.
+\newblock URL \url{https://doi.org/10.1007/BF00122574}.
+
+\bibitem[Wang et~al.(2022)Wang, Dai, Hanasusanto, and Ho]{wangRobustContextualPortfolio2022}
+Yijie Wang, Ling Dai, Grani~A Hanasusanto, and Chin~Pang Ho.
+\newblock Robust {{Contextual Portfolio Optimization}} with {{Gaussian Mixture Models}}.
+\newblock 2022.
+\newblock URL \url{https://optimization-online.org/?p=19079}.
+
+\end{thebibliography}

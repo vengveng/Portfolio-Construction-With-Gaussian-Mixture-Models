@@ -1,0 +1,183 @@
+\chapter[Appendix]{}
+
+\section{Full KDE Portfolio Derivation}
+\label{app:kde}
+\begin{align*}
+  \mathbb{E}[U(R(\mathbf{w}))] &= -\frac{1}{n}\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i+\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}\right) \\
+  &= -\frac{1}{n}\exp\left(\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}\right)\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i\right) \\
+  \intertext{Maximizing the expected utility:}
+  \arg\max_\mathbf{w}{\mathbb{E}[U(R(\mathbf{w}))]} &= \arg\max_\mathbf{w}{-\frac{1}{n}\exp\left(\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}\right)\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i\right)} \\
+  &= \arg\min_\mathbf{w}{{\frac{1}{n}\exp\left(\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}\right)\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i\right)}} \\
+  &= \arg\min_\mathbf{w}\log{{{\frac{1}{n}\exp\left(\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}\right)\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i\right)}}} \\
+  &= \arg\min_\mathbf{w}{\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}+\log{\left[\sum_{i=1}^{n}\exp\left(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i\right)\right]}}-\log n \\
+  &= \arg\min_\mathbf{w}\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}+LSE(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i)-\log n
+  \end{align*}
+
+Setting up Lagrangian and imposing the fully invested constraint:
+$$\mathcal{L}=\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}+LSE(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i)+\lambda(\mathbf{w^{\mathsf{T}}1}-1)$$
+
+Define:
+$$f_i(\mathbf{w})=-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i$$
+$$\Longrightarrow \mathcal{L}=\frac{1}{2}\gamma^2\mathbf{w}^{\mathsf{T}}\mathbf{H}\mathbf{w}+LSE(-\gamma\mathbf{w}^{\mathsf{T}}\mathbf{r}_i)+\lambda(\mathbf{w^{\mathsf{T}}1}-1)$$
+$$\frac{\partial\mathcal{L}}{\partial\mathbf{w}}=\frac{\partial}{\partial\mathbf{w}}LSE_i(f_i(\mathbf{w}))+\gamma^2\mathbf{H}\mathbf{w}+\lambda\mathbf{1}$$
+\begin{align*}
+\frac{\partial}{\partial\mathbf{w}}LSE_i(f_i(\mathbf{w}))&=\frac{\partial}{\partial\mathbf{w}}\log{\left[{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\right]} \\
+&=\frac{1}{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\cdot\frac{\partial}{\partial\mathbf{w}}\left[{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\right] \\
+&=\frac{1}{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\left[{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\cdot\frac{\partial}{\partial\mathbf{w}}f_i(\mathbf{w})\right] \\
+&=\frac{1}{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\left[{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\cdot\frac{\partial}{\partial\mathbf{w}}f_i(\mathbf{w})\right] \\
+&\frac{\partial}{\partial\mathbf{w}}f_i(\mathbf{w})=-\gamma\mathbf{r}_i \\
+\Longrightarrow \frac{\partial}{\partial\mathbf{w}}LSE_i(f_i(\mathbf{w}))&=\frac{{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\cdot(-\gamma\mathbf{r}_i)}{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}
+\end{align*}
+
+Recognizing the softmax function
+\begin{align*}
+  &\quad\frac{{\exp f_i(\mathbf{w})}}{\sum_{i=1}^{n}\exp f_i(\mathbf{w})}\equiv p_i \\
+  \frac{\partial\mathcal{L}}{\partial\mathbf{w}}:\quad&\sum_{i=1}^{n}p_i(-\gamma\mathbf{r}_i)+\gamma^2\mathbf{H}\mathbf{w}+\lambda\mathbf{1}=0 \\
+  =&\gamma^2\mathbf{H}\mathbf{w}-\gamma\sum_{i=1}^{n}p_i\mathbf{r}_i+\lambda\mathbf{1}=0
+\end{align*}
+
+Denoting for brevity
+$$c\equiv\sum_{i=1}^{n}p_i\mathbf{r}_i$$
+$$\Longrightarrow\gamma^{2}\mathbf{H}\mathbf{w}-\gamma c+\lambda\mathbf{1}=0$$
+$$\mathbf{w}=\mathbf{H}^{-1}\left(\frac{\gamma}{\gamma^{2}}c-\frac{\lambda}{\gamma^{2}}\mathbf{1}\right)$$
+$$1=\frac{\gamma}{\gamma^{2}}\mathbf{1}^{\mathsf{T}}\mathbf{H}^{-1}c-\frac{\lambda}{\gamma^{2}}\mathbf{1}^{\mathsf{T}}\mathbf{H}^{-1}\mathbf{1}$$
+$$-\frac{\lambda}{\gamma^{2}}=\frac{1-\frac{1}{\gamma}\mathbf{1}^{\mathsf{T}}\mathbf{H}^{-1}c}{\mathbf1^T \mathbf{H}^{-1}\mathbf1}$$
+$$\Longrightarrow\mathbf{w}^*=\frac{1}{\gamma}\mathbf{H}^{-1}c+\left(\frac{1-\frac{1}{\gamma}\mathbf{1}^{\mathsf{T}}\mathbf{H}^{-1}c}{\mathbf1^T \mathbf{H}^{-1}\mathbf1}\right)\mathbf{H}^{-1}\mathbf{1}$$
+$$\boxed{\mathbf{w}^*=\frac{1}{\gamma}\mathbf{H}^{-1}c+\left(\frac{1}{\mathbf1^T H^{-1}\mathbf1}-\frac{1}{\gamma}\frac{\mathbf{1}^{\mathsf{T}}\mathbf{H}^{-1}c}{\mathbf1^T H^{-1}\mathbf1}\right)\mathbf{H}^{-1}\mathbf{1}}$$
+with
+$$c\equiv \sum_{i=1}^{n} \frac{\exp f_i(\mathbf{w})}{\sum_{j=1}^{n} \exp f_j(\mathbf{w})} \mathbf{r}_i$$
+
+\section{LSE Jacobian \& Hessian}
+\label{app:lse}
+Suppose we have a vector valued, twice-differentiable function: 
+$$f(\mathbf{w})=(f_1(\mathbf{w}), f_2(\mathbf{w}),...,f_k(\mathbf{w}))^{\mathsf{T}}$$
+
+It's Jacobian matrix is:
+$$\mathbf{J}_f=\begin{bmatrix} \frac{\partial f_1}{\partial w_{1}}, \frac{\partial f_1}{\partial w_{2}}, \dots,\frac{\partial f_1}{\partial w_{n}} \\ \frac{\partial f_2}{\partial w_{1}}, \frac{\partial f_2}{\partial w_{2}}, \dots,\frac{\partial f_2}{\partial w_{n}} \\ \vdots \\ \frac{\partial f_k}{\partial w_{1}}, \frac{\partial f_k}{\partial w_{2}}, \dots,\frac{\partial f_k}{\partial w_{n}}\end{bmatrix} = \begin{bmatrix} \nabla f_1(\mathbf{w})^{\mathsf{T}}\\ \nabla f_2(\mathbf{w})^{\mathsf{T}} \\ \vdots \\ \nabla f_k(\mathbf{w})^{\mathsf{T}}\end{bmatrix}$$
+
+And the log-sum-exponent function that takes $f_i(\mathbf{w})$ as an argument:
+$$LSE_i(f_i(\mathbf{w}))=\log{\left[\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\right]}$$
+
+---
+Gradient
+$$l(\mathbf{w})=\log{\left[\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\right]}\equiv \log(s), \qquad s=\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))$$
+
+$$\frac{\partial l}{\partial w_j}=\frac{1}{s}\cdot\frac{\partial}{\partial w_i}s$$
+
+$$\frac{\partial}{\partial w_j}s=\sum_{i=1}^{k}\frac{\partial}{\partial w_j}\exp(f_i(\mathbf{w}))=\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})$$
+
+$$\Longrightarrow\frac{\partial l}{\partial w_j}=\frac{1}{s}\cdot\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})$$
+
+$$=\sum_{i=1}^{k}p_i\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})\qquad\text{where}\qquad p_i=\frac{\exp( f_i(\mathbf{w}))}{s}=\frac{{\exp( f_i(\mathbf{w}))}}{\sum_{i=1}^{k}\exp (f_i(\mathbf{w}))}$$
+
+The gradient of log-sum-exponent function with respect to the input vector  $\mathbf{w}$ is the softmax-weighted average of gradients of functions $f_i(\mathbf{w})$.
+
+---
+Hessian
+
+$$\Longrightarrow\frac{\partial^2 l}{\partial w_j\partial w_k}=\left(\frac{\partial}{\partial w_k}\frac{1}{s}\right)\cdot\frac{\partial}{\partial w_j}s+\frac{1}{s}\cdot\left(\frac{\partial^2}{\partial w_j\partial w_k}s\right)$$
+
+$$\rightarrow\frac{\partial}{\partial w_j}\frac{1}{s}=-\frac{1}{s^2}\cdot\frac{\partial}{\partial w_j}s=-\frac{1}{s^2}\cdot\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})$$
+
+$$\rightarrow\frac{\partial^2}{\partial w_j\partial w_k}s=\frac{\partial}{\partial w_k}\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})$$
+
+$$=\sum_{i=1}^{k}\left[\exp(f_i(\mathbf{w}))\cdot\left(\frac{\partial^2}{\partial w_j\partial w_k}f_i(\mathbf{w})\right)+\exp(f_i(\mathbf{w}))\cdot\left(\frac{\partial}{\partial w_k}f_i(\mathbf{w})\right)\left(\frac{\partial}{\partial w_j}f_i(\mathbf{w})\right)\right]$$
+
+$$=\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\left[\left(\frac{\partial^2}{\partial w_j\partial w_k}f_i(\mathbf{w})\right)+\left(\frac{\partial}{\partial w_k}f_i(\mathbf{w})\right)\left(\frac{\partial}{\partial w_j}f_i(\mathbf{w})\right)\right]$$
+
+Which means that the Hessian is:
+
+$$\Longrightarrow\frac{\partial^2 l}{\partial w_j\partial w_k}=\frac{1}{s}\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\left[\left(\frac{\partial^2}{\partial w_j\partial w_k}f_i(\mathbf{w})\right)+\left(\frac{\partial}{\partial w_k}f_i(\mathbf{w})\right)\left(\frac{\partial}{\partial w_j}f_i(\mathbf{w})\right)\right]-$$
+
+$$\qquad\qquad\qquad-\frac{1}{s^2}\cdot\left(\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_j}f_i(\mathbf{w})\right)\left(\sum_{i=1}^{k}\exp(f_i(\mathbf{w}))\cdot\frac{\partial}{\partial w_k}f_i(\mathbf{w})\right)$$
+
+$$=\sum_{i=1}^{k}p_i\cdot\left[\mathbf{H}_{f_i}+\mathbf{J}_{f_i}^{}\,\mathbf{J}_{f_i}^{\mathsf{T}}\right]-\left(\sum_{i=1}^{k}p_i\mathbf{J}_{f_i}\right)\left(\sum_{j=1}^{k}p_j\mathbf{J}_{f_i}\right)^{\mathsf{T}}$$
+
+Where $\mathbf{J}_{f_i}$ and $\mathbf{H}_{f_i}$ are the Jacobian and Hessian matrix of function $f_i(\mathbf{w})$ respectively.
+
+$$\sum_{i=1}^{k}p_i\cdot\left[\mathbf{J}_{f_i}^{}\,\mathbf{J}_{f_i}^{\mathsf{T}}\right]-\left(\sum_{i=1}^{k}p_i\mathbf{J}_{f_i}\right)\left(\sum_{j=1}^{k}p_j\mathbf{J}_{f_i}\right)^{\mathsf{T}}$$
+
+\newpage
+\section{Average Performance Per Index}
+\label{app:avgperf}
+
+\begin{table}[H]
+  \centering
+  \makebox[\textwidth][c]{\input{tables/A40_1.tex}}
+  \caption[Per index performance]{Average annualized performance (Jan 2015-Mar 2025) of all portfolio configurations, aggregated by index. The table is sorted within each index block by Sharpe ratio (SR).}
+  \label{tab:app:avgperf:combined}
+\end{table}
+
+
+\newpage
+\section{Computational Considerations}
+\label{app:compute}
+The implementation of GMM and KDE portfolio optimization presents several computational challenges. This section outlines our experiences and recommendations for efficient implementation.
+
+\subsection{Optimization Frameworks}
+The EM estimation in GMM represents the most computationally intensive step in our implementation. Its complexity grows substantially with both the number of clusters $K$ and the dimensions of the sample window. Despite considerable effort to accelerate this process, we achieved only minimal improvements. This computational burden makes the practical application of optimal $K$ selection discussed in Section \ref{sec:gmmselect} prohibitively expensive for strategies requiring frequent rebalancing.
+
+For portfolio optimization in Python, we initially employed \textit{cvxpy}, which generally serves as an excellent default choice for convex problems. However, while both KDE and GMM formulations are convex, their performance with \textit{cvxpy} deteriorates with large windows. This occurs because \textit{cvxpy} must recompile the problem into a form compatible with its optimization algorithm each time we slide the window of return observations. The resulting compile time grows with both the sample length and the square of the portfolio dimension.
+
+As an alternative, we recommend \textit{cyipopt}, a highly optimized interior-point solver. Unlike \textit{cvxpy}, \textit{cyipopt} requires only that the user provide analytic expressions for the objective's gradient and Hessian once, bypassing all symbolic translation. For KDE optimization, this approach delivered dramatically faster and more optimal solutions.
+
+\subsection{Improving \textit{scipy} Performance}
+As a general-purpose solver, \textit{scipy} would not typically be expected to outperform specialized optimization libraries. However, our experience shows that it matches the optimality of \textit{cvxpy} while executing significantly faster for smaller problems (approximately 20-30 assets maximum). It also offers superior stability, making it valuable as a fallback solver when \textit{cvxpy} or \textit{cyipopt} fails, which occasionally occurs even if the problems should be valid in principle.
+
+We found that \textit{scipy}'s performance can be substantially improved through several techniques:
+
+\begin{enumerate}
+\item Use solvers that accept user-defined Jacobian functions, such as SLSQP, and provide these functions explicitly. This eliminates the need for \textit{scipy} to approximate function gradients via finite differences.
+
+\item When providing the Jacobian function, set \textit{jac=True} rather than passing the function as a separate argument. This approach requires the objective function to return both the objective value and its gradient as outputs (i.e., \textit{return objective\_value, objective\_gradient}), avoiding redundant computation of matrix multiplications and significantly improving performance.
+
+\item Precompile objective and Jacobian functions. This can be accomplished through simple approaches like adding \textit{numba} decorators to functions, or more involved techniques such as implementing functions in C. In our work, custom C functions delivered order-of-magnitude speed improvements for certain portfolio estimations.
+\end{enumerate}
+
+\subsection{General Performance Considerations}
+Parallel processing represents perhaps the most significant performance uplift available. While detailed implementation discussion lies beyond our scope, it suffices to say that runtime decreases approximately linearly with the number of allocated workers. In our empirical backtest performed on a MacBook M1 Pro (8-core) with 16GB RAM, parallelization resulted in nearly an 8-fold speed improvement.
+
+Finally, we emphasize the importance of using a platform-aware environment manager like \textit{conda}. Unlike \textit{pip}, \textit{conda} automatically installs pre-built library binaries optimized for specific CPU architectures. This results in significant performance gains for core numerical libraries with no additional implementation effort. In our experience, using \textit{conda} instead of \textit{pip} yielded performance improvements of approximately 20-30\%.
+
+\section{Decision Trees}
+\label{app:decisiontrees}
+
+\begin{table}[H]
+  \centering
+  \input{tables/A50_1.tex}
+  \caption[CART 1]{Decision tree for $\Delta$SR$_p$(KDE-VW).}
+  \label{fig:tree1}
+\end{table}
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \input{tables/A50_2.tex}
+  \caption[CART 2]{Decision tree for $\Delta$SR$_p$(TAN(KDE)-VW).}
+  \label{fig:tree2}
+\end{table}
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \input{tables/A50_3.tex}
+  \caption[CART 3]{Decision tree for $\Delta$DD(KDE-MV).}
+  \label{fig:tree3}
+\end{table}
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \input{tables/A50_4.tex}
+  \caption[CART 4]{Decision tree for $\Delta$DD(TAN(KDE)-MV).}
+  \label{fig:tree4}
+\end{table}
+\clearpage
+
+\begin{table}[H]
+  \centering
+  \input{tables/A50_5.tex}
+  \caption[CART 5]{Decision tree for $\Delta$SR$_p$(TAN(KDE)-TAN).}
+  \label{fig:tree5}
+\end{table}
+% \clearpage

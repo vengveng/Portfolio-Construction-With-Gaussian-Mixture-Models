@@ -1,0 +1,32 @@
+\
+\paragraph{CART: $\Delta$DD(KDE - MV)}
+
+\begin{flushleft}
+\ttfamily % Use typewriter font for the tree
+N $\leq$ 25.00 \\
+\quad window (1 to 12) \\
+\quad \quad data\_freq (daily to weekly) \\
+\quad \quad \quad index $\neq$ FTSE100 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [63\% $\leq$ 0, 37\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad \quad index = FTSE100 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [34\% $\leq$ 0, 66\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad data\_freq (monthly) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [28\% $\leq$ 0, 72\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad window (36 to 120) \\
+\quad \quad N $\leq$ 15.00 \\
+\quad \quad \quad index $\neq$ HSI \\
+\quad \quad \quad \quad $\rightarrow$ weights: [76\% $\leq$ 0, 24\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad N > 15.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [59\% $\leq$ 0, 41\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+N > 25.00 \\
+\quad window (1 to 3) \\
+\quad \quad data\_freq (daily) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [65\% $\leq$ 0, 35\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad window (6 to 120) \\
+\quad \quad index $\neq$ STOXX50 \\
+\quad \quad \quad data\_freq (daily) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [20\% $\leq$ 0, 80\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad index = STOXX50 \\
+\quad \quad \quad N $\leq$ 40.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [58\% $\leq$ 0, 42\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\end{flushleft}

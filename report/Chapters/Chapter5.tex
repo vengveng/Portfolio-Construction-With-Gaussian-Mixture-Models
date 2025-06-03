@@ -1,0 +1,14 @@
+\chapter{Conclusion}
+\label{chap:conclusion}
+\lhead{Chapter 5. \emph{Conclusion}}
+\vspace*{-1\baselineskip}
+
+In this paper, we extend Markowitz's mean-variance framework by embedding skewness directly through mixture density estimators. Applying GMM and KDE to exponential-utility maximization allows us to bypass the need for additional skewness parameters or complex behavioral models. Central to both results is the log-sum-exponent operator, which elevates adverse outcomes in proportion to the risk-aversion parameter $\gamma$. As a result, $\gamma$ now governs both variance and skewness without sacrificing convexity or analytical tractability.
+
+We have shown that replacing the single-Gaussian return assumption with a GMM or KDE density causes a log-sum-exponent weighting to appear naturally inside the exponential-utility objective. That single structural change allows mean-variance optimization to internalize skewness without explicit modeling of extra moments, additional parameters, complex behavioral models, or numerical fragility. The LSE re-weights each historical return in proportion to its disutility, letting the usual risk-aversion parameter $\gamma$ penalize both variance and left-tail outcomes, while keeping the optimization problem convex.
+
+The efficient frontiers of this mechanism lead to three well-defined regimes. When risk aversion is low ($\gamma<\bar{\gamma}$), the optimal solution mimics the standard Markowitz frontier and pursues high expected returns. At the endogenous threshold $\gamma=\bar{\gamma}$, emerges the modified minimum-variance portfolio, which balances the tradeoff between expected returns, variance and tail-risk. Beyond the threshold $\gamma>\bar{\gamma}$, the model willingly accepts higher volatility in order to achieve positive skewness.
+
+Our empirical analysis compares density-weighted approaches across multiple equity indices. Kernel density estimators perform robustly, as their returns remain stable out of sample. Gaussian mixtures show potential on their in-sample frontiers, but fall short when performance dispersion is considered. This lack of performance consistency is exacerbated by the computational cost of the EM algorithm. Kernel density estimation, by contrast, can avoid parameter estimation entirely.
+
+In addition to the suggestions offered in Section \ref{sec:limitations}, future work should test whether the LSE mechanism offers improvements to other return-driven strategies, such as equal-risk-contribution. Even so, our approach embeds skewness seamlessly into Markowitz's mean-variance framework, uniting variance and skewness aversion under a single risk-aversion parameter. By requiring practitioners only to tune $\gamma$, this framework resolves the practical and analytical challenges of non-Gaussian returns and provides a straightforward enhancement to classical portfolio construction.

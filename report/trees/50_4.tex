@@ -1,0 +1,35 @@
+\
+\paragraph{CART: $\Delta$DD(TAN(KDE) - MV)}
+
+\begin{flushleft}
+\ttfamily % Use typewriter font for the tree
+N $\leq$ 25.00 \\
+\quad data\_freq (daily to weekly) \\
+\quad \quad N $\leq$ 15.00 \\
+\quad \quad \quad index $\neq$ STOXX50 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [88\% $\leq$ 0, 12\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad N > 15.00 \\
+\quad \quad \quad index $\neq$ S\&P500 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [72\% $\leq$ 0, 28\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad data\_freq (monthly) \\
+\quad \quad index $\neq$ HSI \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [22\% $\leq$ 0, 78\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad \quad window (36 to 120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [51\% $\leq$ 0, 49\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad index = HSI \\
+\quad \quad \quad \quad $\rightarrow$ weights: [79\% $\leq$ 0, 21\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+N > 25.00 \\
+\quad data\_freq (daily to weekly) \\
+\quad \quad N $\leq$ 75.00 \\
+\quad \quad \quad data\_freq (daily) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [63\% $\leq$ 0, 37\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad N > 75.00 \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [56\% $\leq$ 0, 44\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad \quad window (36 to 120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [2\% $\leq$ 0, 98\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad data\_freq (monthly) \\
+\quad \quad N $\leq$ 40.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [13\% $\leq$ 0, 87\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\end{flushleft}

@@ -1,0 +1,37 @@
+\
+\paragraph{CART: $\Delta$SR$_p$(TAN(KDE) - TAN)}
+
+\begin{flushleft}
+\ttfamily % Use typewriter font for the tree
+index $\neq$ HSI \\
+\quad N $\leq$ 40.00 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad window (1) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [64\% $\leq$ 0, 36\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad \quad window (3 to 120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [46\% $\leq$ 0, 54\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad window (6 to 120) \\
+\quad \quad \quad index = FTSE100 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [17\% $\leq$ 0, 83\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad N > 40.00 \\
+\quad \quad window (1 to 6) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [72\% $\leq$ 0, 28\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad window (12 to 120) \\
+\quad \quad \quad N $\leq$ 275.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [46\% $\leq$ 0, 54\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\quad \quad \quad N > 275.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [67\% $\leq$ 0, 33\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+index = HSI \\
+\quad window (1 to 36) \\
+\quad \quad window (1 to 6) \\
+\quad \quad \quad N $\leq$ 15.00 \\
+\quad \quad \quad \quad $\rightarrow$ weights: [83\% $\leq$ 0, 17\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad window (12 to 120) \\
+\quad \quad \quad window (1 to 12) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [73\% $\leq$ 0, 27\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad window (60 to 120) \\
+\quad \quad window (1 to 60) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [59\% $\leq$ 0, 41\% > 0] $\Rightarrow$ predict $\Delta$ $\leq$ 0 \\
+\quad \quad window (120) \\
+\quad \quad \quad \quad $\rightarrow$ weights: [42\% $\leq$ 0, 58\% > 0] $\Rightarrow$ predict $\Delta$ > 0 \\
+\end{flushleft}

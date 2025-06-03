@@ -1,0 +1,41 @@
+\
+\paragraph{CART: $\Delta$SR$_p$(TAN(KDE) - VW)}
+
+\begin{flushleft}
+\ttfamily %
+index ≠ FTSE100 \\
+\quad index ≠ S\&P500 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad N ≤ 15.00 \\
+\quad \quad \quad \quad → weights: [100\% ≤ 0, 0\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad N > 15.00 \\
+\quad \quad \quad \quad → weights: [42\% ≤ 0, 58\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad window (6 to 120) \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad → weights: [20\% ≤ 0, 80\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad window (120) \\
+\quad \quad \quad \quad → weights: [69\% ≤ 0, 31\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad index = S\&P500 \\
+\quad \quad data\_freq (daily to weekly) \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad → weights: [87\% ≤ 0, 13\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (1 to 60) \\
+\quad \quad \quad \quad → weights: [97\% ≤ 0, 3\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad \quad window (120) \\
+\quad \quad \quad \quad → weights: [76\% ≤ 0, 24\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad data\_freq (monthly) \\
+\quad \quad \quad N ≤ 25.00 \\
+\quad \quad \quad \quad → weights: [33\% ≤ 0, 67\% > 0] ⇒ predict Δ > 0 \\
+\quad \quad \quad N > 25.00 \\
+\quad \quad \quad \quad → weights: [76\% ≤ 0, 24\% > 0] ⇒ predict Δ ≤ 0 \\
+index = FTSE100 \\
+\quad N ≤ 65.00 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad \quad → weights: [95\% ≤ 0, 5\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad window (1 to 3) \\
+\quad \quad \quad \quad → weights: [90\% ≤ 0, 10\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad \quad window (6 to 120) \\
+\quad \quad \quad \quad → weights: [100\% ≤ 0, 0\% > 0] ⇒ predict Δ ≤ 0 \\
+\quad N > 65.00 \\
+\quad \quad \quad \quad → weights: [44\% ≤ 0, 56\% > 0] ⇒ predict Δ > 0 \\
+\end{flushleft}
