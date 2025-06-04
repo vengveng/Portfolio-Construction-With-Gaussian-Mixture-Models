@@ -1,6 +1,6 @@
 # Portfolio-Optimisation Thesis — Reproducibility Repository
 
-A self-contained archive of the code, (light‐weight) data, and \LaTeX\ sources
+A self-contained archive of the code, (subset of) data, and *LaTeX* sources
 used in the master's thesis **"Portfolio Construction with Gaussian Mixture
 Models"** (Ivan Khalin, June 2025).  
 Everything required to regenerate tables, figures, and single-configuration
@@ -9,7 +9,7 @@ out to keep the footprint reasonable.
 
 ---
 
-## 1 Folder Layout (high-level)
+## 1 Layout
 
 ```
 .
@@ -23,8 +23,6 @@ out to keep the footprint reasonable.
 └── requirements.txt
 ```
 
-A more detailed tree is in Section 5.
-
 ---
 
 ## 2 Quick Start & Objective Catalogue
@@ -37,8 +35,7 @@ Edit the header of `single_config.py` (index, γ, window, *N*, …) and run:
 python single_config.py
 ```
 
-Results print to screen; nothing is written to disk unless you call the
-dedicated `save_*()` helpers on the returned Portfolio object.
+Results print to screen; nothing is written to disk unless you uncomment `portfolio_returns.to_csv(...)`.
 
 ### 2.2 Available objective functions
 
@@ -49,14 +46,14 @@ dedicated `save_*()` helpers on the returned Portfolio object.
 | `max_sharpe` | Classical tangency (max-SR) | CVXPY / IPOPT / SciPy |
 | `erc` | Equal-risk-contribution | CVXPY / IPOPT |
 | `markowitz` | Mean–variance with γ | CVXPY / SciPy |
-| `kde` | Proposed KDE exp-utility | CVXPY / IPOPT / SciPy |
+| `kde` | Proposed KDE exp-utility with γ | CVXPY / IPOPT / SciPy |
 | `kde_max_sharpe` | Tangency under KDE moments | CVXPY / IPOPT |
-| `gmm` | GMM exp-utility | IPOPT / CVXPY / SciPy |
+| `gmm` | GMM exp-utility with γ | IPOPT / CVXPY / SciPy |
 | `gmm_max_sharpe` | Tangency under GMM moments | CVXPY / IPOPT |
 
 **Bandwidth vs. clusters**
-- **KDE**: `h` (or matrix) is the kernel bandwidth; scalar ⇒ isotropic, diagonal/full ⇒ anisotropic.
-- **GMM**: `k` is the maximum number of Gaussian clusters; the EM step internally selects k_min ≤ k̂ ≤ k_max via cross-validation.
+- **KDE**: `h` (or matrix) is the kernel bandwidth; if a scalar is provided ⇒ isotropic, diagonal otherwise.
+- **GMM**: `k` is the number of Gaussian clusters to be used (default is 8); cross-validation can be used with GMM class methods.
 
 ### 2.3 Default hyper-parameters
 
@@ -67,6 +64,9 @@ markowitz_defaults = {'gamma': 1}
 ```
 
 ### 2.4 Solver map
+
+These are the avilible solvers for each of the portfolio types; 'best' solvers based on our testing of speed and optimality.
+If a solver fails, `Portfolio` will attempt the next one in the list.
 
 ```python
 valid_solvers_class = {
@@ -81,7 +81,7 @@ valid_solvers_class = {
 }
 ```
 
-If `lib/portfolio_lib.so` is present and you pass `use_c_lib=True`,
+If `lib/portfolio_lib.so` is present and properly linked,
 tangency-portfolio optimisation (`max_sharpe`, `kde_max_sharpe`, …) switches to
 the C gradient for a sizeable speed-up; otherwise it falls back on the pure
 Python path automatically.
@@ -102,36 +102,14 @@ The notebook
 ## 4 Optional C Acceleration
 
 `core/portfolio_lib.c` contains hand-optimised gradients for the tangency
-objectives. Build instructions (single line per *nix flavour) are commented at
-the top of that file; no compiler flags are required beyond `-shared -O3 -fPIC`.
-If the `.so` cannot be compiled, everything still runs—just slower.
+objectives. Build instructions are provided in the file.
+If the `.so` cannot be compiled, everything still runs.
 
 ---
 
-## 5 Detailed Repository Tree
+## 5 Notes
 
-```
-.
-├── core/portfolio_lib.c        # optional C gradients
-├── lib/portfolio_lib.so        # appears here after compilation
-├── data/                       # light subset (<200 MB)
-│   ├── index_histories/…
-│   ├── portfolio_returns/*.csv
-│   └── median_returns_with_envelope/*.csv
-├── optimisation_tools.py       # objectives, solvers, defaults
-├── single_config.py            # reproducible toy run
-├── plots.ipynb                 # regenerate paper graphics
-├── report/                     # full thesis (LaTeX, images, PDF)
-└── requirements.txt
-```
-
----
-
-## 6 Notes & Caveats
-
-- **Storage** – Full raw return matrices (~40 GB) are not in the repo. Paths in the notebook assume only the filtered CSVs that ship here.
-- **Data licence** – Check your provider's terms before redistributing the index histories.
-- **Extending** – Add a new objective by implementing `_fit_<method>_<solver>()` inside `optimisation_tools.py` and registering it in `solver_map`.
+- **Storage** – Full raw return matrices (~40 GB) are not in the repo. Paths in the notebook assume only the filtered CSVs included here.
 
 ---
 
@@ -141,7 +119,5 @@ If you use or adapt this code please cite the thesis:
 
 Ivan Khalin, "Portfolio Construction with Gaussian Mixture Models,"
 Master's thesis, HEC Lausanne, June 2025.
-
-A DOI will be added to this README should one be assigned in the future.
 
 ---
