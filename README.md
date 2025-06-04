@@ -1,271 +1,148 @@
-# Portfolio Optimization Thesis Repository
+```markdown
+# Portfolio-Optimisation Thesis — Reproducibility Repository
 
-This repository contains all code, data, and documentation used in the accompanying master’s thesis on portfolio optimization. It is organized so that anyone can reproduce results, inspect custom optimization routines, and generate all figures and tables directly.
+A self-contained archive of the code, (light‐weight) data, and \LaTeX\ sources
+used in the master's thesis **"Portfolio Construction with Gaussian Mixture
+Models"** (Ivan Khalin, June 2025).  
+Everything required to regenerate tables, figures, and single-configuration
+experiments is shipped in this repo; the 40 GB of raw return panels is left
+out to keep the footprint reasonable.
 
 ---
 
-## 📂 Repository Structure
+## 1 Folder Layout (high-level)
 
 ```
 .
-├── __pycache__/                     
-├── cleaner.py                       
-├── core/                            
-│   └── portfolio_lib.c              
-├── data/                            ← Contains only the files required to run optimizations and generate plots; the 40+ GB of raw portfolio-returns data is omitted.  
-│   ├── index_histories/             
-│   ├── indices.csv                  
-│   ├── kde_bandwidths_std/          
-│   ├── leavers_joiners/             
-│   ├── list_equity/                 
-│   ├── master_index.csv             
-│   ├── master_tickers.csv           
-│   ├── median_returns_with_envelope/ ← Only the CSVs that are ultimately selected by the plotting routines  
-│   ├── MV_cleaned.csv               
-│   ├── MV.csv                       
-│   ├── portfolio_returns/            ← Only the “_Nmax_” CSVs needed for reproducing performance tables  
-│   ├── processed_portfolio_returns/  
-│   └── TRI_cleaned.csv              
-├── lib/                             
-│   └── portfolio_lib.so             
-├── optimization_tools.py            
-├── plots.ipynb                      
-├── report/                          
-│   ├── Appendices/                  
-│   ├── Bibliography.bib             
-│   ├── Chapters/                    
-│   ├── images/                      
-│   ├── Miscellaneous/               
-│   ├── tables/                      
-│   ├── Thesis.bbl                   
-│   ├── Thesis.pdf                   
-│   ├── Thesis.synctex.gz            
-│   ├── Thesis.tex                   
-│   └── trees/                       
-├── single_config.py                 
-└── requirements.txt                 
+├── core/                   # optional C backend (portfolio_lib.c)
+├── lib/                    # .so library ends up here if you compile
+├── data/                   # only the filtered CSVs needed for plots
+├── report/                 # full thesis source, images, tables, PDF
+├── optimisation_tools.py   # main objective + solver dispatcher
+├── single_config.py        # run one configuration end-to-end
+├── plots.ipynb             # regenerate every figure / table
+└── requirements.txt
 ```
+
+A more detailed tree is in Section 5.
 
 ---
 
-## 🚀 Getting Started
+## 2 Quick Start & Objective Catalogue
 
-### 1. Prerequisites
+### 2.1 Run a single configuration
 
-* **Python 3.10+**
-* A C compiler (e.g., `gcc` or `clang`) if you wish to compile the optional C library
-
-Install Python dependencies with:
-
-```bash
-pip install -r requirements.txt
-```
-
-`requirements.txt` includes:
-
-```
-cvxpy
-cyipopt
-matplotlib
-numba
-numpy
-pandas
-pathos
-scikit-learn
-scipy
-seaborn
-tqdm
-```
-
-<details>
-<summary><strong>Optional: Build the C library (for tangency-portfolio speed-ups)</strong></summary>
-
-If you wish to use the C-accelerated routines in `core/portfolio_lib.c`, compile it into `lib/portfolio_lib.so`. For example:
-
-```bash
-cd core
-gcc -fPIC -O3 -shared -o ../lib/portfolio_lib.so portfolio_lib.c
-```
-
-If the C library is missing or fails to compile, the code will still run (more slowly) using the pure-Python implementations in `optimization_tools.py`.
-
-</details>
-
----
-
-## 🔧 Running Single-Configuration Optimizations
-
-All settings for a single-configuration run are controlled at the top of `single_config.py`. By default, it runs over the entire data sample and does not save outputs unless you explicitly call the save methods.
-
-```python
-# Configuration block of a single configuration
-# -------------------------------------------------------------------------------
-indices = ['FTSE100', 'HSI', 'S&P500', 'STOXX50']
-index_name = indices[2]  # Change index here (e.g., 'S&P500')
-N = 100
-GAMMA = 10
-random_seed = 1
-
-# Configuration settings
-config = {
-    'limit_year': None,
-    'data_frequency': "weekly",
-    'rebalancing_frequency': "annual",
-    'master_index': None,
-    'global_tickers': None,
-    'timeout': 60,
-    'window_size': 1,
-    'window_unit': 'years',
-}
-
-# Static portfolio configurations
-portfolio_configs = [
-    {"name": "equal"},
-    {"name": "value"},
-    {"name": "min_var"},
-    {"name": "markowitz", "args": {"gamma": 1 / GAMMA}},
-    {"name": "max_sharpe"},
-    # {"name": "erc", 'solver': 'ipopt'},
-    {"name": "kde", "prefit_kde": True, "args": {"gamma": GAMMA}},
-    {"name": "gmm", "prefit_gmm": True, "args": {"gamma": GAMMA}},
-    {"name": "kde_max_sharpe", "prefit_kde": True},
-    {"name": "gmm_max_sharpe", "prefit_gmm": True},
-]
-settings.update_settings(**config)
-# -------------------------------------------------------------------------------
-```
-
-The `Portfolio` constructor (in `optimization_tools.py`) automatically dispatches to one of the available methods based on the `name` and solver. If you choose a method or solver that isn’t compatible, the code will raise an error. Available portfolio types include:
-
-```python
-valid_types = (
-    'erc', 'max_sharpe', 'min_var', 'equal', 'kde', 'gmm',
-    'kde_max_sharpe', 'gmm_max_sharpe', 'moments_only',
-    'value', 'markowitz'
-)
-```
-
-Default hyperparameter dictionaries:
-
-```python
-kde_defaults = {'h': None, 'gamma': 1, 'matrix': 'isotropic', 'cv': 5}
-gmm_defaults = {'k': 3, 'gamma': 1, 'method': 'default', 'k_min': 1, 'k_max': 10, 'cv': 5, 'solver': 'ipopt'}
-markowitz_defaults = {'gamma': 1}
-```
-
-Supported solvers per method:
-
-```python
-valid_solvers_class = {
-    'erc': ['cvxpy', 'scipy', 'ipopt'],
-    'equal': ['cvxpy', 'scipy', 'ipopt'],
-    'value': ['cvxpy', 'scipy', 'ipopt'],
-    'max_sharpe': ['cvxpy', 'scipy', 'ipopt'],
-    'min_var': ['cvxpy', 'scipy'],
-    'kde': ['cvxpy', 'ipopt', 'scipy'],
-    'gmm': ['ipopt', 'cvxpy', 'scipy'],
-    'kde_max_sharpe': ['cvxpy', 'scipy', 'ipopt'],
-    'gmm_max_sharpe': ['cvxpy', 'scipy', 'ipopt'],
-    'markowitz': ['cvxpy', 'scipy'],
-}
-```
-
-To run, simply call:
+Edit the header of `single_config.py` (index, γ, window, *N*, …) and run:
 
 ```bash
 python single_config.py
 ```
 
-Outputs are not saved by default; you must invoke the specific save methods on the `Portfolio` instance if you wish to persist results to CSV.
+Results print to screen; nothing is written to disk unless you call the
+dedicated `save_*()` helpers on the returned Portfolio object.
+
+### 2.2 Available objective functions
+
+| Keyword (portfolio_configs) | Purpose | Main solver(s) |
+|---|---|---|
+| `equal`, `value` | Benchmarks (1/N, value-weight) | — |
+| `min_var` | Global minimum variance | CVXPY / SciPy |
+| `max_sharpe` | Classical tangency (max-SR) | CVXPY / IPOPT / SciPy |
+| `erc` | Equal-risk-contribution | CVXPY / IPOPT |
+| `markowitz` | Mean–variance with γ | CVXPY / SciPy |
+| `kde` | Proposed KDE exp-utility | CVXPY / IPOPT / SciPy |
+| `kde_max_sharpe` | Tangency under KDE moments | CVXPY / IPOPT |
+| `gmm` | GMM exp-utility | IPOPT / CVXPY / SciPy |
+| `gmm_max_sharpe` | Tangency under GMM moments | CVXPY / IPOPT |
+
+**Bandwidth vs. clusters**
+- **KDE**: `h` (or matrix) is the kernel bandwidth; scalar ⇒ isotropic, diagonal/full ⇒ anisotropic.
+- **GMM**: `k` is the maximum number of Gaussian clusters; the EM step internally selects k_min ≤ k̂ ≤ k_max via cross-validation.
+
+### 2.3 Default hyper-parameters
+
+```python
+kde_defaults = {'h': None, 'gamma': 1, 'matrix': 'isotropic', 'cv': 5}
+gmm_defaults = {'k': 3, 'gamma': 1, 'k_min': 1, 'k_max': 10, 'cv': 5}
+markowitz_defaults = {'gamma': 1}
+```
+
+### 2.4 Solver map
+
+```python
+valid_solvers_class = {
+    'min_var'        : ['cvxpy', 'scipy'],
+    'max_sharpe'     : ['cvxpy', 'ipopt', 'scipy'],
+    'erc'            : ['cvxpy', 'ipopt', 'scipy'],
+    'kde'            : ['cvxpy', 'ipopt', 'scipy'],
+    'gmm'            : ['ipopt', 'cvxpy', 'scipy'],
+    'kde_max_sharpe' : ['cvxpy', 'ipopt', 'scipy'],
+    'gmm_max_sharpe' : ['cvxpy', 'ipopt', 'scipy'],
+    'markowitz'      : ['cvxpy', 'scipy'],
+}
+```
+
+If `lib/portfolio_lib.so` is present and you pass `use_c_lib=True`,
+tangency-portfolio optimisation (`max_sharpe`, `kde_max_sharpe`, …) switches to
+the C gradient for a sizeable speed-up; otherwise it falls back on the pure
+Python path automatically.
 
 ---
 
-## 🛠 “optimization\_tools.py” Overview
+## 3 Regenerating All Tables & Figures
 
-`optimization_tools.py` houses all custom objective functions and the main `Portfolio` class. Its key features:
-
-1. **Portfolio types (`valid_types`)**:
-
-   ```python
-   ('erc', 'max_sharpe', 'min_var', 'equal', 'kde', 'gmm',
-    'kde_max_sharpe', 'gmm_max_sharpe', 'moments_only',
-    'value', 'markowitz')
-   ```
-2. **Default hyperparameters**:
-
-   ```python
-   kde_defaults = {'h': None, 'gamma': 1, 'matrix': 'isotropic', 'cv': 5}
-   gmm_defaults = {'k': 3, 'gamma': 1, 'method': 'default', 'k_min': 1, 'k_max': 10, 'cv': 5, 'solver': 'ipopt'}
-   markowitz_defaults = {'gamma': 1}
-   ```
-3. **Solver dispatch (`solver_map`)**:
-   Each (`method`, `solver`) pair maps to an internal `_fit_*` routine.
-4. **Supported solvers per method (`valid_solvers_class`)**.
-5. **C-accelerated routines**: If `use_c_lib=True` and `lib/portfolio_lib.so` is present, tangency-portfolio solves run via the compiled C code.
+Open `plots.ipynb` and run all cells.
+The notebook
+1. loads the slimmed-down CSVs under `data/`,
+2. recomputes performance statistics,
+3. outputs every plot to `report/images/`,
+4. rewrites the accompanying LaTeX tables in `report/tables/`.
 
 ---
 
-## 📊 Reproduce All Figures & Tables
+## 4 Optional C Acceleration
 
-The Jupyter notebook `plots.ipynb` automatically:
-
-1. Loads cleaned data from `data/median_returns_with_envelope/…` and `data/portfolio_returns/…`.
-2. Computes statistics (Sharpe ratios, drawdowns, VaR/ES, etc.).
-3. Generates each figure (saved under `report/images/`).
-4. Generates each LaTeX table (saved under `report/tables/`).
-
-To run it, simply open in Jupyter Lab or VS Code and execute all cells. Ensure that the data folders match what the notebook expects; files that meet the selection criteria are already included in this repo.
+`core/portfolio_lib.c` contains hand-optimised gradients for the tangency
+objectives. Build instructions (single line per *nix flavour) are commented at
+the top of that file; no compiler flags are required beyond `-shared -O3 -fPIC`.
+If the `.so` cannot be compiled, everything still runs—just slower.
 
 ---
 
-## 🔄 Cleaning Up Generated/Untracked Files
+## 5 Detailed Repository Tree
 
-* **`cleaner.py`**: Utility to remove any files outside the explicitly “keep” lists. For example, after generating new CSVs or temporary artifacts, it prunes directories back to only the files needed for reproducing results and plots.
-
-* **`.gitignore`** (in repo root) ensures that the following are not tracked:
-
-  ```
-  __pycache__/
-  *.pyc
-  *.so
-  .DS_Store
-  venv/
-  *.log
-  ```
-
----
-
-## ⚠️ Notes & Caveats
-
-1. **C-Accelerated Tangency (max\_sharpe) Code**
-
-   * If you compile `core/portfolio_lib.c` into `lib/portfolio_lib.so`, the gradient‐based solves for tangency portfolios run much faster. Otherwise, Python-only solvers (SciPy or CVXPY) are used.
-
-2. **Data Licensing & Citation**
-
-   * The raw index histories under `data/index_histories/…` must be cited appropriately (according to your data source).
-   * Please cite this repository in your thesis or any derived work.
-
-3. **Data Contents**
-
-   * The `data/` folder includes only the subsets required to run optimizations and generate the final plots/tables. The full raw portfolio-returns (40+ GB) is intentionally omitted.
-   * Files under `median_returns_with_envelope/…` and `portfolio_returns/…` are precisely those that meet the selection criteria used by `plots.ipynb`.
-
-4. **Extending & Customizing**
-
-   * To add a new objective, implement a `_fit_<your_method>_<solver>` method in `optimization_tools.py` and register it in `solver_map`.
-   * To tweak default hyperparameters (e.g., number of GMM components, KDE bandwidth), modify the relevant default dictionary or pass overrides when constructing a `Portfolio` instance.
+```
+.
+├── core/portfolio_lib.c        # optional C gradients
+├── lib/portfolio_lib.so        # appears here after compilation
+├── data/                       # light subset (<200 MB)
+│   ├── index_histories/…
+│   ├── portfolio_returns/*.csv
+│   └── median_returns_with_envelope/*.csv
+├── optimisation_tools.py       # objectives, solvers, defaults
+├── single_config.py            # reproducible toy run
+├── plots.ipynb                 # regenerate paper graphics
+├── report/                     # full thesis (LaTeX, images, PDF)
+└── requirements.txt
+```
 
 ---
 
-## 📚 Citation
+## 6 Notes & Caveats
 
-If you use this code or data in your work, please cite:
-
-> **\[Your Name], “Master’s Thesis on Portfolio Optimization,” \[University Name], \[Year].**
-> GitHub: `https://github.com/your-username/your-repo`
-> DOI: *\[if assigned]*
+- **Storage** – Full raw return matrices (~40 GB) are not in the repo. Paths in the notebook assume only the filtered CSVs that ship here.
+- **Data licence** – Check your provider's terms before redistributing the index histories.
+- **Extending** – Add a new objective by implementing `_fit_<method>_<solver>()` inside `optimisation_tools.py` and registering it in `solver_map`.
 
 ---
 
-Thank you for exploring this repository! Feel free to open an issue or send a pull request if you spot bugs, wish to suggest improvements, or add new optimization routines.
+## Acknowledgements
+
+If you use or adapt this code please cite the thesis:
+
+Ivan Khalin, "Portfolio Construction with Gaussian Mixture Models,"
+Master's thesis, HEC Lausanne, June 2025.
+
+A DOI will be added to this README should one be assigned in the future.
+
+---
