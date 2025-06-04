@@ -169,10 +169,34 @@ def portfolio_evaluation(monthlyReturns: pd.Series | np.ndarray, monthlyRFrate: 
         'std': annualizedVolatility,
         'SR': sharpeRatio,
         'min': minimum,
-        'max': maximum
+        'max': maximum,
     }
 
     return portfolio_performance
+
+def pperf(monthlyReturns: pd.Series | np.ndarray, monthlyRFrate: pd.Series) -> dict:
+
+    mean = monthlyReturns.mean()
+    volatility = monthlyReturns.std()
+    annualizedMean = annualized_mean(mean)
+    annualizedVolatility = annualized_volatility(volatility)
+    monthlyExcessReturn = monthlyReturns.sub(monthlyRFrate, axis=0)
+    meanExcessReturn = monthlyExcessReturn.mean()
+    annualizedExcessReturn = annualized_mean(meanExcessReturn)
+    sharpeRatio = sharpe_ratio(annualizedExcessReturn, annualizedVolatility)
+    mdd = (1 + monthlyReturns).cummax().sub(1 + monthlyReturns).max()
+
+    portfolio_performance = {
+        'mu': annualizedMean,
+        'std': annualizedVolatility,
+        'SR': sharpeRatio,
+        'CR': (1 + monthlyReturns).cumprod().iloc[-1] - 1,
+        'VaR': monthlyReturns.quantile(0.05) * settings.ANNUALIZATION_FACTOR,
+        'Skew': monthlyReturns.skew(),
+        'MDD': mdd,
+    }
+
+    return pd.DataFrame(portfolio_performance)
 
 class KDE():
     def __init__(

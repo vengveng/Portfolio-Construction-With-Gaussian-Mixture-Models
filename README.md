@@ -4,8 +4,8 @@ A self-contained archive of the code, (subset of) data, and *LaTeX* sources
 used in the master's thesis **"Portfolio Construction with Gaussian Mixture
 Models"** (Ivan Khalin, June 2025).  
 Everything required to regenerate tables, figures, and single-configuration
-experiments is shipped in this repo; the 40 GB of raw return panels is left
-out to keep the footprint reasonable.
+experiments is shipped in this repo; the 40 GB of raw portfolio returns is 
+left out to keep the footprint reasonable.
 
 ---
 
@@ -23,6 +23,8 @@ out to keep the footprint reasonable.
 └── requirements.txt
 ```
 
+`TRI_cleaned.csv` is the total returns index, `MV_cleaned.csv` are the market valuations for all tickers.
+
 ---
 
 ## 2 Quick Start & Objective Catalogue
@@ -36,6 +38,7 @@ python single_config.py
 ```
 
 Results print to screen; nothing is written to disk unless you uncomment `portfolio_returns.to_csv(...)`.
+By default, the entire out-of-sample performance is shown, rather than the 10-year window discussed in the thesis.
 
 ### 2.2 Available objective functions
 
@@ -88,7 +91,28 @@ Python path automatically.
 
 ---
 
-## 3 Regenerating All Tables & Figures
+## 3 Example Output
+
+Running `single_config.py` with default settings (100 assets from the S&P500, weekly data, annual rebalancing)
+20 years of out-of-sample asset selection and performance are computed in just over one second.
+
+```
+                 mu  std   SR   CR   VaR  Skew  MDD
+equal          0.12 0.20 0.53 5.21 -2.09 -0.52 0.30
+value          0.11 0.18 0.52 4.67 -1.98 -0.54 0.29
+min_var        0.10 0.15 0.59 4.44 -1.58 -0.52 0.25
+markowitz      0.11 0.23 0.42 3.73 -2.37 -0.19 0.36
+max_sharpe     0.09 0.18 0.43 3.01 -1.81 -0.37 0.29
+kde            0.11 0.15 0.59 4.72 -1.58 -0.29 0.26
+gmm            0.09 0.18 0.39 2.58 -2.02 -0.34 0.28
+kde_max_sharpe 0.09 0.18 0.41 2.77 -1.79 -0.50 0.30
+gmm_max_sharpe 0.07 0.18 0.33 1.96 -1.89 -0.54 0.32
+Optimization Runtime: 1.023667s
+```
+
+---
+
+## 4 Regenerating All Tables & Figures
 
 Open `plots.ipynb` and run all cells.
 The notebook
@@ -99,7 +123,7 @@ The notebook
 
 ---
 
-## 4 Optional C Acceleration
+## 5 Optional C Acceleration
 
 `core/portfolio_lib.c` contains hand-optimised gradients for the tangency
 objectives. Build instructions are provided in the file.
@@ -107,7 +131,7 @@ If the `.so` cannot be compiled, everything still runs.
 
 ---
 
-## 5 Notes
+## 6 Notes
 
 - **Storage** – Full raw return matrices (~40 GB) are not in the repo. Paths in the notebook assume only the filtered CSVs included here.
 

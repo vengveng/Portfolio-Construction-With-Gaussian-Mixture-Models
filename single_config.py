@@ -6,17 +6,17 @@ from tqdm import tqdm
 from pathos.multiprocessing import ProcessingPool as Pool
 
 from optimization_tools import (
-    settings, KDE, GMM, Moments, Portfolio,
+    settings, KDE, GMM, Moments, Portfolio, pperf,
     iteration_depth,  portfolio_evaluation, get_annualization_factor, 
     prepare_returns, colorize, preload_bandwidth_csv, update_portfolio)
 
 
-# Configuration block of a single configuration
+# Configuration block of a single configuration - Give it a run!
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 indices = ['FTSE100', 'HSI', 'S&P500', 'STOXX50']
-index_name = indices[2] # THIS ALLOWS TO CHANGE THE INDEX
-N = 100
+index_name = indices[2] # THIS ALLOWS TO CHANGE THE INDEX -> S&P500'
+N = 100 # N = 'max' for all tickers in index
 GAMMA = 10
 random_seed = 1
 
@@ -91,6 +91,7 @@ rf_rate = rf_series.reindex(masterIndex, method='ffill')
 portfolio_returns = pd.DataFrame(index=masterIndex, columns=[p["name"] for p in portfolio_configs])
 
 previous_tickers = None
+cycle = True if N == 'max' else False
 dates = pd.Series(index=masterIndex)
 moments = {}
 
@@ -109,11 +110,7 @@ for step in progress:
     if len(evaluationIndex) == 0:
         break
 
-    # Setting True here will use the maximum number of valid tickers in the index history
-    # ---------------------------------------------------------------------------------------------------------
-    # indices = update_portfolio(index_history, lastDate, N, random_seed, previous_tickers, True, valid_tickers)
-    indices = update_portfolio(index_history, lastDate, N, random_seed, previous_tickers, False, valid_tickers)
-    # ---------------------------------------------------------------------------------------------------------
+    indices = update_portfolio(index_history, lastDate, N, random_seed, previous_tickers, cycle, valid_tickers)
 
     sampleRf = rf_rate.loc[optimizationIndex].iloc[-1]
     sampleReturns     = all_returns.loc[optimizationIndex, indices].sort_index(axis=1)
@@ -185,23 +182,21 @@ tqdm.write(colorize("Saving data...", 'blue'))
 # portfolio_returns.to_csv(os.path.join(root, 'data', 'portfolio_returns','portfolio_returns.csv'))
 tqdm.write(colorize("Done!", 'green'))
 
-print((1 + portfolio_returns[portfolio_returns.index.year <= 2025]).cumprod().tail(1))
-print(portfolio_evaluation(portfolio_returns, rf_rate)['SR'])
+portfolio_returns = portfolio_returns[portfolio_returns.index.year <= 2025]
+with pd.option_context("display.float_format", "{:.2f}".format):
+        print(pperf(portfolio_returns, rf_rate))
 print(f"Optimization Runtime: {(time.time() - start_time):2f}s")
 
 
 # Weekly, annual, 1 year, 100
-#                equal     value   min_var markowitz max_sharpe       kde       gmm kde_max_sharpe gmm_max_sharpe
-# DATE                                                                                                           
-# 2025-03-23  6.211003  5.667261  5.435348  4.731493   4.013137  5.716828  3.582871        3.76737        2.95561
-# equal             0.528038
-# value             0.524937
-# min_var           0.589012
-# markowitz         0.415776
-# max_sharpe         0.42501
-# kde               0.590509
-# gmm               0.386481
-# kde_max_sharpe    0.405084
-# gmm_max_sharpe    0.326276
-# dtype: object
-# Optimization Runtime: 1.144427s
+#                  mu  std   SR   CR   VaR  Skew  MDD
+# equal          0.12 0.20 0.53 5.21 -2.09 -0.52 0.30
+# value          0.11 0.18 0.52 4.67 -1.98 -0.54 0.29
+# min_var        0.10 0.15 0.59 4.44 -1.58 -0.52 0.25
+# markowitz      0.11 0.23 0.42 3.73 -2.37 -0.19 0.36
+# max_sharpe     0.09 0.18 0.43 3.01 -1.81 -0.37 0.29
+# kde            0.11 0.15 0.59 4.72 -1.58 -0.29 0.26
+# gmm            0.09 0.18 0.39 2.58 -2.02 -0.34 0.28
+# kde_max_sharpe 0.09 0.18 0.41 2.77 -1.79 -0.50 0.30
+# gmm_max_sharpe 0.07 0.18 0.33 1.96 -1.89 -0.54 0.32
+# Optimization Runtime: 1.023667s
