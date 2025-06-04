@@ -1,4 +1,3 @@
-```markdown
 # Portfolio-Optimisation Thesis — Reproducibility Repository
 
 A self-contained archive of the code, (light‐weight) data, and \LaTeX\ sources
