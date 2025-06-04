@@ -1,0 +1,11 @@
+cvxpy
+cyipopt
+matplotlib
+numba
+numpy
+pandas
+pathos
+scikit-learn
+scipy
+seaborn
+tqdm
