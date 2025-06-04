@@ -93,7 +93,7 @@ Python path automatically.
 
 ## 3 Example Output
 
-Running `single_config.py` with default settings (100 assets from the S&P500, weekly data, annual rebalancing)
+Running `single_config.py` with default settings (100 assets from the S&P500, weekly data, annual rebalancing),
 20 years of out-of-sample asset selection and performance are computed in just over one second.
 
 ```
