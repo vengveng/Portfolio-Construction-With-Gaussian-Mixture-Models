@@ -6,9 +6,9 @@ from tqdm import tqdm
 from pathos.multiprocessing import ProcessingPool as Pool
 
 from optimization_tools import (
-    settings, KDE, GMM, Moments, Portfolio, pperf,
-    iteration_depth,  portfolio_evaluation, get_annualization_factor, 
-    prepare_returns, colorize, preload_bandwidth_csv, update_portfolio)
+    settings, KDE, GMM, Moments, Portfolio, 
+    iteration_depth, get_annualization_factor, update_portfolio,
+    prepare_returns, colorize, preload_bandwidth_csv, pperf)
 
 
 # Configuration block of a single configuration - Give it a run!
