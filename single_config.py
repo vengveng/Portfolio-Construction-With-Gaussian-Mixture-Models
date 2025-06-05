@@ -23,13 +23,13 @@ random_seed = 1
 # Configuration settings
 config = {
     'limit_year': None,
-    'data_frequency': "weekly",
-    'rebalancing_frequency': "annual",
+    'data_frequency': "weekly",         # "daily", "weekly", "monthly", "annual"
+    'rebalancing_frequency': "annual",  # "monthly", "annual"
     'master_index': None,
     'global_tickers': None,
     'timeout': 60,
-    'window_size': 1,
-    'window_unit': 'years',
+    'window_size': 1,                   # Any integer       
+    'window_unit': 'years',             # "months", "years"
 }
 
 # Static portfolio configurations
