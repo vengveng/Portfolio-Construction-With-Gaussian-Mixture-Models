@@ -16,13 +16,13 @@ from optimization_tools import (
 #--------------------------------------------------------------------------------
 indices = ['FTSE100', 'HSI', 'S&P500', 'STOXX50']
 index_name = indices[2] # THIS ALLOWS TO CHANGE THE INDEX -> S&P500'
-N = 100 # N = 'max' for all tickers in index
+N = 100 # N = "max" for all tickers in index
 GAMMA = 10
-random_seed = 1
+random_seed = 1 # ticker selection seed
 
 # Configuration settings
 config = {
-    'limit_year': None,
+    'limit_year': None,                 # Default is end of data
     'data_frequency': "weekly",         # "daily", "weekly", "monthly", "annual"
     'rebalancing_frequency': "annual",  # "monthly", "annual"
     'master_index': None,
