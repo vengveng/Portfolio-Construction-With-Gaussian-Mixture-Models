@@ -1474,7 +1474,7 @@ def iteration_depth(window: int = 5, window_units: str = 'years') -> dict:
     elif frequency == "monthly":
         eval_dates = pd.date_range(start="2006-01-01", end=f"{limit_year}-12-31", freq="MS")
     else:
-        raise ValueError(f"Unsupported frequency: {frequency}")
+        raise ValueError(f"Unsupported rebalancing frequency: {frequency}")
     
     if window_units == 'years':
         window_offset = pd.DateOffset(years=window)
